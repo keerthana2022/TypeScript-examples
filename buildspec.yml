@@ -1,0 +1,16 @@
+version: 0.2
+phases:
+ install:
+  runtime-versions:
+      nodejs: 10
+  commands:
+    - echo “starting codeql installation”
+    - wget https://github.com/github/codeql-action/releases/latest/download/codeql-bundle-linux64.tar.gz
+    - tar -xvzf ./codeql-bundle-linux64.tar.gz
+    - export PATH=$PATH:/$CODEBUILD_SRC_DIR/codeql
+    - node -version
+    - echo “creating data base”
+    - codeql database create --language=javascript $CODEBUILD_SRC_DIR/javascript-database --overwrite
+    - touch example.sarif
+    - codeql database analyze $CODEBUILD_SRC_DIR/javascript-database --format=sarif-latest --sarif-category=javascript --output=test.sarif
+    - echo “$github_token” | codeql github upload-results --repository=keerthana2022/simple-java-project --ref=refs/heads/master --sarif=test.sarif --github-auth-stdin
