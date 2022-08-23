@@ -8,7 +8,7 @@ phases:
     - wget https://github.com/github/codeql-action/releases/latest/download/codeql-bundle-linux64.tar.gz
     - tar -xvzf ./codeql-bundle-linux64.tar.gz
     - export PATH=$PATH:/$CODEBUILD_SRC_DIR/codeql
-    - node -version
+    - node --version
     - echo “creating data base”
     - codeql database create --language=javascript $CODEBUILD_SRC_DIR/javascript-database --overwrite
     - touch example.sarif
