@@ -17,4 +17,4 @@ phases:
     - echo $github_token | codeql github upload-results --repository=keerthana2022/TypeScript-examples --ref=refs/heads/master --sarif=test.sarif --github-auth-stdin
  post_build:
     commands:
-      - bash -c "if [ /"$CODEBUILD_BUILD_SUCCEEDING/" == /"0/" ]; then exit 1; fi"
+      - bash -c "if [ /"$CODEBUILD_BUILD_SUCCEEDING/" == /"0/" ]; then exit 0; fi"
