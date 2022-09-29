@@ -4,7 +4,7 @@ phases:
   runtime-versions:
       nodejs: 10
   commands:
-    - echo "$CODEBUILD_RESOLVED_SOURCE_VERSION" > git_hash
+    - echo $CODEBUILD_RESOLVED_SOURCE_VERSION > git_hash
     - echo $CODEBUILD_RESOLVED_SOURCE_VERSION
     - echo $git_hash
     - echo “starting codeql installation”
