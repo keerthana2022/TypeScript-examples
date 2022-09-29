@@ -15,4 +15,6 @@ phases:
     - touch example.sarif
     - codeql database analyze $CODEBUILD_SRC_DIR/javascript-database --format=sarif-latest --sarif-category=javascript --output=test.sarif
     - echo $github_token | codeql github upload-results --repository=keerthana2022/TypeScript-examples --ref=refs/heads/master --sarif=test.sarif --github-auth-stdin
-    - echo $CODEBUILD_BUILD_SUCCEEDING
+ post_build:
+    commands:
+      - bash -c "if [ /"$CODEBUILD_BUILD_SUCCEEDING/" == /"0/" ]; then exit 1; fi"
