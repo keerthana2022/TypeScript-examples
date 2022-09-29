@@ -4,8 +4,7 @@ phases:
   runtime-versions:
       nodejs: 10
   commands:
-    - echo $CODEBUILD_RESOLVED_SOURCE_VERSION > git_hash
-    - echo $CODEBUILD_RESOLVED_SOURCE_VERSION
+    - git_hash=`echo $CODEBUILD_RESOLVED_SOURCE_VERSION`
     - echo $git_hash
     - echo “starting codeql installation”
     - wget https://github.com/github/codeql-action/releases/latest/download/codeql-bundle-linux64.tar.gz
@@ -16,4 +15,4 @@ phases:
     - codeql database create --language=javascript $CODEBUILD_SRC_DIR/javascript-database --overwrite
     - touch example.sarif
     - codeql database analyze $CODEBUILD_SRC_DIR/javascript-database --format=sarif-latest --sarif-category=javascript --output=test.sarif
-    - echo $github_token | codeql github upload-results --repository=keerthana2022/TypeScript-examples --ref=refs/heads/master --sarif=test.sarif --github-auth-stdin
+    - echo $github_token | codeql github upload-results --repository=keerthana2022/TypeScript-examples --ref=refs/heads/master --commit=$git_hash --sarif=test.sarif --github-auth-stdin
